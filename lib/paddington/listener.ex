@@ -1,4 +1,7 @@
 defmodule Paddington.Listener do
+  alias Paddington.AppRegistry
+  alias Paddington.Transducer
+
   def start_link(device_name) do
     Task.start_link fn -> listen(device_name) end
   end
@@ -19,6 +22,9 @@ defmodule Paddington.Listener do
   end
 
   def translate_and_send(event) do
-    IO.inspect event
+    event
+    |> List.to_tuple
+    |> Transducer.to_coord
+    |> AppRegistry.broadcast
   end
 end

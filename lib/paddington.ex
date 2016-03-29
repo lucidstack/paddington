@@ -1,6 +1,7 @@
 defmodule Paddington do
-  alias Paddington.Listener
+  alias Paddington.AppRegistry
   alias Paddington.Emitter
+  alias Paddington.Listener
 
   use Application
 
@@ -8,8 +9,9 @@ defmodule Paddington do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(Listener, ["Launchpad Mini"]),
+      worker(AppRegistry, []),
       worker(Emitter, ["Launchpad Mini"]),
+      worker(Listener, ["Launchpad Mini"]),
     ]
 
     opts = [strategy: :one_for_one, name: Paddington.Supervisor]

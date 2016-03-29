@@ -11,7 +11,7 @@ defmodule PaddingtonEmitterTest do
   end
 
   test "emit/1, given an event, writes to the device saved in the state" do
-    device = Agent.start(fn-> end)
+    device = Agent.start(fn -> 0 end)
 
     with_mock PortMidi, [write: fn(_device, _event) -> :ok end] do
       handle_cast({:emit, {1,2,3}}, device)
