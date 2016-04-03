@@ -1,4 +1,5 @@
 defmodule Paddington.Listener do
+  import Logger
   alias Paddington.AppRegistry
   alias Paddington.Transducer
 
@@ -7,10 +8,14 @@ defmodule Paddington.Listener do
   end
 
   def listen(device_name) do
-    {:ok, input} = PortMidi.open(:input, device_name)
-    PortMidi.listen(input, self)
-
-    loop
+    case PortMidi.open(:input, device_name) do
+      {:ok, input} ->
+        PortMidi.listen(input, self)
+        loop(input)
+      {:error, reason} ->
+        error "Device couldn't be opened: #{reason}"
+        exit(reason)
+    end
   end
 
   def loop do
