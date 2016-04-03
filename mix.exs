@@ -14,7 +14,7 @@ defmodule Paddington.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :portmidi],
+    [applications: [:logger, :portmidi, :yaml_elixir],
      mod: {Paddington, []}]
   end
 
@@ -28,8 +28,10 @@ defmodule Paddington.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:portmidi, "~> 3.1"},
+    [{:portmidi, github: "lucidstack/ex-portmidi"},
      {:mock, "~> 0.1.1", only: :test},
-     {:credo, "~> 0.3", only: [:dev, :test]}]
+     {:credo, "~> 0.3.10", only: [:dev, :test]},
+     {:yamerl, github: "yakaz/yamerl"},
+     {:yaml_elixir, "~> 1.0.0"}]
   end
 end
