@@ -18,12 +18,12 @@ defmodule Paddington.Listener do
     end
   end
 
-  def loop do
+  def loop(input) do
     receive do
-      event -> translate_and_send(event)
+      {^input, event} -> translate_and_send(event)
     end
 
-    loop
+    loop(input)
   end
 
   def translate_and_send(event) do
