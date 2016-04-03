@@ -1,4 +1,5 @@
 defmodule Paddington.Transducer do
+  import Logger, only: [warn: 1]
   defmodule OutOfBoundsCoordsError, do: defexception [:message]
   defmacro in_bounds(coord) do
     quote do: unquote(coord) >= 0 and unquote(coord) <= 7
@@ -35,6 +36,10 @@ defmodule Paddington.Transducer do
     {:grid, rem(note, 16), trunc(note/16), :pressed}
   def to_coord({@grid_status, note, @release_velocity}), do:
     {:grid, rem(note, 16), trunc(note/16), :released}
+
+  # Fallback
+  def to_coord(input), do:
+    warn("Can't find a tranducer for MIDI event " <> inspect(input))
 
   # Paddington => MIDI
   ####################
