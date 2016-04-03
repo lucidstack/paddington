@@ -6,6 +6,7 @@ defmodule Paddington do
   use Application
 
   def start(_type, _args) do
+    if System.get_env("DEBUG"), do: :observer.start
     import Supervisor.Spec, warn: false
 
     children = [
