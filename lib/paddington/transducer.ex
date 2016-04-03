@@ -5,16 +5,18 @@ defmodule Paddington.Transducer do
     quote do: unquote(coord) >= 0 and unquote(coord) <= 7
   end
 
-  @grid_status 144
+  @grid_status  144
   @right_status 144
-  @top_status 176
+  @top_status   176
+  @reset_status 176
 
   @top_base_note 104
-  @right_notes [8, 24, 40, 56, 72, 88, 104, 120]
+  @right_notes   [8, 24, 40, 56, 72, 88, 104, 120]
 
-  @base_velocity 12
-  @press_velocity 127
+  @base_velocity    12
+  @press_velocity   127
   @release_velocity 0
+  @reset_velocity   0
 
   # MIDI => Paddington
   ####################
@@ -49,6 +51,9 @@ defmodule Paddington.Transducer do
 
   def to_midi(:grid, pos: {x, y}, colors: _), do:
     raise OutOfBoundsCoordsError, "x and y must be between 0 and 7"
+
+  def to_midi(:reset), do:
+    {@reset_status, 0, @reset_velocity}
 
   # Private implementation
   ########################
