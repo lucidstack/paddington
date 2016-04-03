@@ -1,4 +1,6 @@
 defmodule Paddington.AppRegistry do
+  alias Paddington.Apps.App
+
   def start_link do
     GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
   end
@@ -22,7 +24,7 @@ defmodule Paddington.AppRegistry do
     {:noreply, [app | apps]}
 
   def handle_cast({:broadcast, event}, apps) do
-    apps |> Enum.each(&(send(&1, event)))
+    apps |> Enum.each(&(App.new_event(&1, event)))
     {:noreply, apps}
   end
 end

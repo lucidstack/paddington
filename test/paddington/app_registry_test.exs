@@ -1,6 +1,9 @@
 defmodule PaddingtonAppRegistryTest do
+  use ExUnit.Case, async: false
+  import Mock
+
+  alias  Paddington.Apps.App
   import Paddington.AppRegistry
-  use ExUnit.Case, async: true
 
   test "init/1 initializes the state with an empy registry" do
     assert {:ok, []} == init(:ok)
@@ -12,7 +15,9 @@ defmodule PaddingtonAppRegistryTest do
   end
 
   test "broadcast/1 sends the given event to the apps in state" do
-    handle_cast({:broadcast, :test}, [self])
-    assert_received :test
+    with_mock App, [new_event: fn(_app, _event) -> :ok end] do
+      handle_cast({:broadcast, :test}, [self])
+      assert called App.new_event(self, :test)
+    end
   end
 end
