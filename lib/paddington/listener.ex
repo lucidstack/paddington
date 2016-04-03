@@ -28,7 +28,6 @@ defmodule Paddington.Listener do
 
   def translate_and_send(event) do
     event
-    |> List.to_tuple
     |> Transducer.to_coord
     |> AppRegistry.broadcast
   end
