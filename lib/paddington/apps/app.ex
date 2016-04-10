@@ -33,8 +33,8 @@ defmodule Paddington.Apps.App do
     {:ok, {app_index, configuration.commands}}
   end
 
-  def handle_call(:commands, _from, {app_index, commands}), do:
-    {:reply, commands, commands}
+  def handle_call(:commands, _from, {_app_index, commands} = state), do:
+    {:reply, commands, state}
 
   def handle_cast({:new_event, {:grid, x, y, :pressed}}, {app_index, commands})
   when x == app_index and y < length(commands) do
@@ -55,7 +55,7 @@ defmodule Paddington.Apps.App do
   def handle_cast({:new_event, _event}, state), do:
     {:noreply, state}
 
-  def terminate(reason, {commands, app_index}), do:
+  def terminate(reason, {app_index, commands}), do:
     lights_off(commands, app_index)
 
   # Private implementation
