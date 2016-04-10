@@ -1,8 +1,8 @@
-defmodule PaddingtonEmitterTest do
+defmodule PaddingtonMidiEmitterTest do
   use ExUnit.Case, async: false
   import Mock
 
-  import Paddington.Emitter
+  import Paddington.Midi.Emitter
 
   test "init/1, given a device_name, opens an output device and saves it in the state" do
     with_mock PortMidi, [open: fn(:output, "Launchpad") -> {:ok, 123} end] do

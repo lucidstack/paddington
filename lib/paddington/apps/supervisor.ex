@@ -1,7 +1,7 @@
 defmodule Paddington.Apps.Supervisor do
   alias Paddington.Apps.App
   alias Paddington.Transducer
-  alias Paddington.Emitter
+  alias Paddington.Midi.Emitter
 
   use Supervisor
 

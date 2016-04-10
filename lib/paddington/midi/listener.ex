@@ -1,4 +1,4 @@
-defmodule Paddington.Listener do
+defmodule Paddington.Midi.Listener do
   import Logger
   alias Paddington.AppRegistry
   alias Paddington.Transducer

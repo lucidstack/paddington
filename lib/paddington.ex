@@ -2,8 +2,8 @@ defmodule Paddington do
   alias Paddington.Apps.Supervisor, as: AppsSupervisor
   alias Paddington.AppRegistry
   alias Paddington.Configuration
-  alias Paddington.Emitter
-  alias Paddington.Listener
+  alias Paddington.Midi.Emitter
+  alias Paddington.Midi.Listener
 
   use Application
 

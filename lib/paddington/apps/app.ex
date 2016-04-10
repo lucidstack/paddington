@@ -1,7 +1,7 @@
 defmodule Paddington.Apps.App do
   alias Paddington.Apps.Configuration
   alias Paddington.AppRegistry
-  alias Paddington.Emitter
+  alias Paddington.Midi.Emitter
   alias Paddington.Transducer
   require Logger
 

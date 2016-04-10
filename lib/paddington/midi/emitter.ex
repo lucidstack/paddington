@@ -1,4 +1,4 @@
-defmodule Paddington.Emitter do
+defmodule Paddington.Midi.Emitter do
   def start_link(device_name) do
     GenServer.start_link(__MODULE__, device_name, name: __MODULE__)
   end
