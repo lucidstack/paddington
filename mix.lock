@@ -9,4 +9,4 @@
   "poolboy": {:hex, :poolboy, "1.5.1"},
   "portmidi": {:git, "https://github.com/lucidstack/ex-portmidi.git", "240c354360612e94dd26d58670bfc0e98f2fbba8", []},
   "yamerl": {:git, "https://github.com/yakaz/yamerl.git", "ae810a808817d9482b4628ae3e20d746e3729fe0", []},
-  "yaml_elixir": {:hex, :yaml_elixir, "1.0.0"}}
+  "yaml_elixir": {:hex, :yaml_elixir, "1.2.0"}}
