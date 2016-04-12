@@ -1,8 +1,8 @@
-defmodule PaddingtonTransducerTest do
+defmodule PaddingtonTransducersLaunchpadTransducerTest do
   use ExUnit.Case, async: true
 
-  alias  Paddington.Transducer.OutOfBoundsCoordsError
-  import Paddington.Transducer
+  alias  Paddington.Transducers.LaunchpadTransducer.OutOfBoundsCoordsError
+  import Paddington.Transducers.LaunchpadTransducer
 
   test "to_coord/1, given a grid event, returns coordinate tuple" do
     assert to_coord({144, 0, 127}) == {:grid, 0, 0, :pressed}
@@ -37,3 +37,4 @@ defmodule PaddingtonTransducerTest do
     end
   end
 end
+

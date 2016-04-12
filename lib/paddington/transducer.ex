@@ -1,74 +1,54 @@
 defmodule Paddington.Transducer do
-  import Logger, only: [warn: 1]
-  defmodule OutOfBoundsCoordsError, do: defexception [:message]
-  defmacro in_bounds(coord) do
-    quote do: unquote(coord) >= 0 and unquote(coord) <= 7
+  @transducers_folder __DIR__ <> "/transducers/"
+
+  # Typespecs implementation
+  ##########################
+  @type t :: module
+
+  @type status   :: non_neg_integer
+  @type note     :: non_neg_integer
+  @type velocity :: non_neg_integer
+
+  @type action_type :: atom
+  @type coordinate  :: integer | {integer, integer}
+  @type state       :: atom
+
+  @type opts :: Keyword.t
+  @type device_name :: String.t
+
+  # Behaviour implementation
+  ##########################
+  @callback to_coord({status, note, velocity}) :: {action_type, coordinate, state}
+  @callback to_midi(action_type) :: {status, note, velocity}
+  @callback to_midi(action_type, opts) :: {status, note, velocity}
+  @callback devices() :: [device_name]
+
+  # Public implementation
+  #######################
+  def set_transducer(device_name) do
+    File.ls!(@transducers_folder)
+    |> Enum.map(&get_module/1)
+    |> Enum.find(&serves_device?(&1, device_name))
+    |> do_set_transducer
   end
-
-  @grid_status  144
-  @right_status 144
-  @top_status   176
-  @reset_status 176
-
-  @top_base_note 104
-  @right_notes   [8, 24, 40, 56, 72, 88, 104, 120]
-
-  @base_velocity    12
-  @press_velocity   127
-  @release_velocity 0
-  @reset_velocity   0
-
-  # MIDI => Paddington
-  ####################
-
-  # Top row
-  def to_coord({@top_status, note, @press_velocity}), do:
-    {:top, note - @top_base_note, :pressed}
-  def to_coord({@top_status, note, @release_velocity}), do:
-    {:top, note - @top_base_note, :released}
-
-  # Right column
-  def to_coord({@right_status, note, @press_velocity}) when note in @right_notes, do:
-    {:right, (note - 8) / 16, :pressed}
-  def to_coord({@right_status, note, @release_velocity}) when note in @right_notes, do:
-    {:right, (note - 8) / 16, :released}
-
-  # Grid
-  def to_coord({@grid_status, note, @press_velocity}), do:
-    {:grid, rem(note, 16), trunc(note/16), :pressed}
-  def to_coord({@grid_status, note, @release_velocity}), do:
-    {:grid, rem(note, 16), trunc(note/16), :released}
-
-  # Fallback
-  def to_coord(input), do:
-    warn("Can't find a tranducer for MIDI event " <> inspect(input))
-
-  # Paddington => MIDI
-  ####################
-
-  def to_midi(:grid, pos: {x, y}, colors: colors) when in_bounds(x) and in_bounds(y), do:
-    {@grid_status, note(x, y), velocity(colors)}
-
-  def to_midi(:grid, pos: {x, y}, colors: _), do:
-    raise OutOfBoundsCoordsError, "x and y must be between 0 and 7"
-
-  def to_midi(:reset), do:
-    {@reset_status, 0, @reset_velocity}
 
   # Private implementation
   ########################
-
-  defp note(x, y), do: y * 16 + x
-
-  import Keyword, only: [get: 3]
-  defp velocity(colors) do
-    red   = (colors |> get(:red, :off)   |> brightness)
-    green = (colors |> get(:green, :off) |> brightness) * 16
-    red + green + @base_velocity
+  defp get_module(file) do
+    file |> Code.load_file(@transducers_folder) |> do_get_module
   end
 
-  defp brightness(:off),    do: 0
-  defp brightness(:low),    do: 1
-  defp brightness(:medium), do: 2
-  defp brightness(:high),   do: 3
+  defp do_get_module(loading_result) do
+    loading_result |> List.last |> elem(0)
+  end
+
+  defp serves_device?(module, device_name) do
+    module.devices |> Enum.any?( &(&1 == device_name) )
+  end
+
+  defp do_set_transducer(nil), do: {:error, :transducer_not_found}
+  defp do_set_transducer(module) do
+    Application.put_env(:paddington, :transducer, module)
+    {:ok, module}
+  end
 end
