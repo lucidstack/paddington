@@ -1,7 +1,6 @@
 defmodule Paddington.Midi.Listener do
   import Logger
   alias Paddington.AppRegistry
-  alias Paddington.Transducer
 
   def start_link(device_name) do
     Task.start_link fn -> listen(device_name) end
@@ -28,7 +27,10 @@ defmodule Paddington.Midi.Listener do
 
   def translate_and_send(event) do
     event
-    |> Transducer.to_coord
+    |> get_transducer.to_coord
     |> AppRegistry.broadcast
   end
+
+  defp get_transducer, do:
+    Application.get_env(:paddington, :transducer)
 end

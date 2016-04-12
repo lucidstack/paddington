@@ -2,6 +2,7 @@ defmodule Paddington do
   alias Paddington.Apps.Supervisor, as: AppsSupervisor
   alias Paddington.AppRegistry
   alias Paddington.Configuration
+  alias Paddington.Transducer
   alias Paddington.Midi.Emitter
   alias Paddington.Midi.Listener
 
@@ -14,12 +15,14 @@ defmodule Paddington do
     |> Path.expand
     |> Configuration.load!
 
-    start_application(configuration)
+    case Transducer.set_transducer(configuration.device) do
+      {:ok, _transducer} -> start_application(configuration)
+      {:error, reason}   -> exit("Couldn't start Paddington: #{reason}")
+    end
   end
 
   # Private implementation
   ########################
-
   defp start_application(configuration) do
     import Supervisor.Spec, warn: false
 

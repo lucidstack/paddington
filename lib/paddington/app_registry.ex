@@ -24,7 +24,7 @@ defmodule Paddington.AppRegistry do
     {:noreply, [app | apps]}
 
   def handle_cast({:broadcast, event}, apps) do
-    apps |> Enum.each(&(App.new_event(&1, event)))
+    apps |> Enum.each(&App.new_event(&1, event))
     {:noreply, apps}
   end
 end

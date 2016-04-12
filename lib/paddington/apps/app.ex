@@ -2,7 +2,6 @@ defmodule Paddington.Apps.App do
   alias Paddington.Apps.Configuration
   alias Paddington.AppRegistry
   alias Paddington.Midi.Emitter
-  alias Paddington.Transducer
   require Logger
 
   @default_colors [red: :medium, green: :high]
@@ -50,7 +49,6 @@ defmodule Paddington.Apps.App do
     {:noreply, {app_index, commands}}
   end
 
-
   # Fallback = ignore
   def handle_cast({:new_event, _event}, state), do:
     {:noreply, state}
@@ -78,6 +76,9 @@ defmodule Paddington.Apps.App do
 
   defp set_light(x, y, colors), do:
     :grid
-    |> Transducer.to_midi(pos: {x, y}, colors: colors)
+    |> get_transducer.to_midi(pos: {x, y}, colors: colors)
     |> Emitter.emit
+
+  defp get_transducer, do:
+    Application.get_env(:paddington, :transducer)
 end
