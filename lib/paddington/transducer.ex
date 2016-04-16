@@ -13,15 +13,15 @@ defmodule Paddington.Transducer do
   @type coordinate  :: integer | {integer, integer}
   @type state       :: atom
 
-  @type opts :: Keyword.t
   @type device_name :: String.t
+  @type opts :: Keyword.t
 
   # Behaviour implementation
   ##########################
+  @callback devices() :: [device_name]
   @callback to_coord({status, note, velocity}) :: {action_type, coordinate, state}
   @callback to_midi(action_type) :: {status, note, velocity}
   @callback to_midi(action_type, opts) :: {status, note, velocity}
-  @callback devices() :: [device_name]
 
   # Public implementation
   #######################

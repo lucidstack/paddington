@@ -1,5 +1,5 @@
 defmodule Paddington.Apps.Supervisor do
-  alias Paddington.Apps.App
+  alias Paddington.Apps.LineApp
   alias Paddington.Midi.Emitter
 
   use Supervisor
@@ -21,7 +21,7 @@ defmodule Paddington.Apps.Supervisor do
   ########################
 
   defp make_app({app_name, index}), do:
-    worker(App, [app_name, index], id: "#{app_name}_#{index}")
+    worker(LineApp, [app_name, index], id: "#{app_name}_#{index}")
 
   defp reset_grid do
     transducer = Application.get_env(:paddington, :transducer)

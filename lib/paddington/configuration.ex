@@ -44,4 +44,3 @@ defmodule Paddington.Configuration do
   defp turn_into_struct(yaml), do:
     struct(__MODULE__, yaml)
 end
-
