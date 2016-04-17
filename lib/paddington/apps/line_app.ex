@@ -64,12 +64,12 @@ defmodule Paddington.Apps.LineApp do
   ########################
   defp load_configuration(path) do
     if File.exists?(path) do
-      path
-      |> File.read!
-      |> Code.eval_string([],
+      path |> File.read! |> Code.eval_string(
+        [],
         functions: [{__MODULE__, __info__(:functions)}],
-        macros: [{__MODULE__, __info__(:macros)}]
+        macros:    [{__MODULE__, __info__(:macros)}]
       )
+
       :ok
     else
       {:error, :configuration_not_found}
