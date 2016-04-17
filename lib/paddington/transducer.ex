@@ -26,7 +26,8 @@ defmodule Paddington.Transducer do
   # Public implementation
   #######################
   def set_transducer(device_name) do
-    File.ls!(@transducers_folder)
+    @transducers_folder
+    |> File.ls!
     |> Enum.map(&get_module/1)
     |> Enum.find(&serves_device?(&1, device_name))
     |> do_set_transducer
@@ -43,7 +44,7 @@ defmodule Paddington.Transducer do
   end
 
   defp serves_device?(module, device_name) do
-    module.devices |> Enum.any?( &(&1 == device_name) )
+    module.devices |> Enum.any?(&(&1 == device_name))
   end
 
   defp do_set_transducer(nil), do: {:error, :transducer_not_found}

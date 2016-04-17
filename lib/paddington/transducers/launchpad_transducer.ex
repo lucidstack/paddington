@@ -51,7 +51,7 @@ defmodule Paddington.Transducers.LaunchpadTransducer do
   ####################
 
   def to_midi(:grid, pos: {x, y}, colors: colors) when in_bounds(x) and in_bounds(y), do:
-    {@grid_status, note(x, y), velocity(colors)}
+    {@grid_status, to_note(x, y), velocity(colors)}
 
   def to_midi(:grid, pos: {_x, _y}, colors: _), do:
     raise OutOfBoundsCoordsError, "x and y must be between 0 and 7"
@@ -62,7 +62,7 @@ defmodule Paddington.Transducers.LaunchpadTransducer do
   # Private implementation
   ########################
 
-  defp note(x, y), do: y * 16 + x
+  defp to_note(x, y), do: y * 16 + x
 
   import Keyword, only: [get: 3]
   defp velocity(colors) do

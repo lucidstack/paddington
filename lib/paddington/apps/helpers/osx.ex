@@ -20,13 +20,13 @@ defmodule Paddington.Apps.Helpers.OSX do
 
   defmacro osascript(command) do
     quote do
-      osx_app = case Map.get(var!(state), :osx_app) do
+      app = case Map.get(var!(state), :osx_app) do
         nil -> Map.get(var!(state), :app_name)
         app -> app
       end
 
       cmd("""
-        osascript -e 'tell application "#{osx_app}"
+        osascript -e 'tell application "#{app}"
             #{unquote(command)}
         end tell'
       """)

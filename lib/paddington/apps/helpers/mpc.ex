@@ -14,7 +14,7 @@ defmodule Paddington.Apps.Helpers.Mpc do
   def playpause, do: mpc("toggle")
   def next,      do: mpc("next")
 
-  def is_playing? do
+  def playing? do
     Regex.match?(~r(\[playing\]), mpc("status"))
   end
 end

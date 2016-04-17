@@ -25,6 +25,6 @@ defmodule Paddington.Apps.Supervisor do
 
   defp reset_grid do
     transducer = Application.get_env(:paddington, :transducer)
-    transducer.to_midi(:reset) |> Emitter.emit
+    :reset |> transducer.to_midi |> Emitter.emit
   end
 end

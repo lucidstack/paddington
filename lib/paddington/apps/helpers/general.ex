@@ -22,15 +22,15 @@ defmodule Paddington.Apps.Helpers.General do
     end
   end
 
-  def open(command) do
+  def open(uri) do
     case :os.type do
-      {:unix, :darwin} -> cmd("open #{command}")
-      {:unix, _}       -> cmd("xdg-open #{command}")
+      {:unix, :darwin} -> cmd("open #{uri}")
+      {:unix, _}       -> cmd("xdg-open #{uri}")
     end
   end
 
-  def cmd(command) do
-    command
+  def cmd(comm) do
+    comm
     |> to_char_list
     |> :os.cmd
     |> to_string
