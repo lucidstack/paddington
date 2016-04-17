@@ -1,6 +1,2 @@
 #!/bin/sh
-
-DIR=$(dirname "$(readlink "$0")")
-cd $DIR/../libexec
-
 elixir --sname paddington -S mix run --no-halt
