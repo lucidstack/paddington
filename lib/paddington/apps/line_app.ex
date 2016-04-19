@@ -48,7 +48,7 @@ defmodule Paddington.Apps.LineApp do
   when i == x and y < length(c) do
     set_light(x, y, @default_colors)
 
-    {label, block} = state.commands |> Enum.reverse |> Enum.at(y)
+    {_label, block} = state.commands |> Enum.reverse |> Enum.at(y)
     Code.eval_quoted(block, [x: x, y: y, state: state], __ENV__)
 
     {:noreply, state}
