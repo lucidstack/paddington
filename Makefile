@@ -7,15 +7,20 @@ all: lib/* config/* mix.exs
 	mix compile
 
 install:
-	mkdir $(OPT_DIR)
-	cp -r * $(OPT_DIR)
+	@echo "Copying paddington folder..."
+	@mkdir $(OPT_DIR)
+	@cp -r * $(OPT_DIR)
 
+	@echo "Installing paddington executable..."
 	@echo "#!/bin/sh\n"                  > $(BIN)
 	@echo "cd $(OPT_DIR) > /dev/null"    >> $(BIN)
 	@echo "source $(OPT_DIR)/bin/paddington" >> $(BIN)
 
-	chmod +x $(BIN)
+	@chmod +x $(BIN)
+	@echo "Done!"
 
 uninstall:
-	rm -rf $(OPT_DIR)
-	rm $(BIN)
+	@echo "Removing paddington folder..."
+	@rm -rf $(OPT_DIR)
+	@rm $(BIN)
+	@echo "Done!"
