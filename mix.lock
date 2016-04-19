@@ -7,6 +7,6 @@
   "mock": {:hex, :mock, "0.1.3"},
   "poison": {:hex, :poison, "2.1.0"},
   "poolboy": {:hex, :poolboy, "1.5.1"},
-  "portmidi": {:git, "https://github.com/lucidstack/ex-portmidi.git", "240c354360612e94dd26d58670bfc0e98f2fbba8", []},
+  "portmidi": {:hex, :portmidi, "4.2.0"},
   "yamerl": {:git, "https://github.com/yakaz/yamerl.git", "ae810a808817d9482b4628ae3e20d746e3729fe0", []},
   "yaml_elixir": {:hex, :yaml_elixir, "1.2.0"}}

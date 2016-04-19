@@ -28,7 +28,7 @@ defmodule Paddington.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:portmidi, github: "lucidstack/ex-portmidi"},
+    [{:portmidi, "~> 4.2.0"},
      {:mock, "~> 0.1.1", only: :test},
      {:credo, "~> 0.3.10", only: [:dev, :test]},
      {:yamerl, github: "yakaz/yamerl"},
