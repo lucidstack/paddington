@@ -13,7 +13,12 @@ applications:
 - iTunes
 ```
 
-The applications are Elixir script (`exs`) files defined in the `~/.paddington` folder, and must follow the naming found in the `.paddington.yml` file. As an example, this is my `~/.paddington/mpc.exs`:
+The device name has to be among one of the connected MIDI devices, or the app
+will fail with an `:invalid_device_id` error. Launch `mix portmidi.devices`
+from the main folder to discover the available devices. The applications are
+Elixir script files (`exs`) defined in the `~/.paddington` folder, and must
+follow the naming found in the `.paddington.yml` file. Check out the [`paddington-example`](https://github.com/lucidstack/paddington-example) repo for a quick start. As an example, this is
+my `~/.paddington/mpc.exs`:
 ```
 app "MPC", :line
 osx "iTerm2"
