@@ -61,7 +61,7 @@ As you can see, different helpers are available in the application files. `app` 
 
 The commands are collected as the interpreter goes through the file(s). In the case of this configuration, that means that if your device has a grid (like a Launchpad), the pad in the upper left corner will focus on iTerm2 and switch to the tmux session named `music` (or switch back to the previous session, if already on `music`).
 
-You can find all the available helpers in the [helpers folder](lib/paddington/apps/helpers) (they are not that many at the moment, bare with me!).
+You can find all the available helpers in the [helpers folder](lib/paddington/apps/helpers) (they are not that many at the moment, bear with me!).
 
 ## Installation
 
